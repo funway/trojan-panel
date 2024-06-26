@@ -19,6 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'login_password',
         'password',
     ];
 
@@ -28,6 +29,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'login_password',
         'password',
         'remember_token',
     ];
@@ -43,5 +45,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * 重写 getAuthPassword 方法
+     * */
+    public function getAuthPassword()
+    {
+        return $this->login_password;
     }
 }
