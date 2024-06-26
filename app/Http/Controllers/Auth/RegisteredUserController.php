@@ -42,6 +42,11 @@ class RegisteredUserController extends Controller
             'password' => hash('sha224', $request->name . ':' . $request->password),
         ]);
 
+        // info($request);
+        // info($user->password);
+        // $user->refresh();
+        // info($user->toJson());
+
         event(new Registered($user));
 
         Auth::login($user);

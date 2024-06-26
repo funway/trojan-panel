@@ -43,15 +43,10 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'is_admin' => 'boolean',
         ];
     }
 
-    /**
-     * 重写 getAuthPassword 方法
-     * */
-    public function getAuthPassword()
-    {
-        return $this->login_password;
-    }
+    // 覆盖 Illuminate\Auth\Authenticatable trait 中的属性
+    protected $authPasswordName = 'login_password';
 }
