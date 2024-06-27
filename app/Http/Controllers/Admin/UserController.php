@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -13,8 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        // $users = DB::table('users')->paginate(20);
-        return view('admin.user-list');
+        $users = DB::table('users')->paginate(3);
+        return view('admin.user-list', ['users' => $users]);
     }
 
     /**
@@ -46,7 +48,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.user-edit', ['user' => $user]);
     }
 
     /**
@@ -54,7 +56,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        if ($request['password'] != null) {
+            $user->login_password = Hash::make($request['password']);
+            $user->password = hash('sha224', $user->name . ':' . $request['password']);
+        }
+        $user->quota = $request['quota']<0 ? -1 : $request['quota']*1048576;
+        
+        $user->save();
+        return redirect()->route('admin.users.index');
     }
 
     /**
