@@ -49,4 +49,9 @@ class User extends Authenticatable
 
     // 覆盖 Illuminate\Auth\Authenticatable trait 中的属性
     protected $authPasswordName = 'login_password';
+
+    public function isAdmin(): bool 
+    {
+        return $this->is_admin === true;
+    }
 }
