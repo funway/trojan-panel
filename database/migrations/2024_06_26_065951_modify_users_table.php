@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->string('login_password')->comment('这是用户登录网站的密码');
             $table->boolean('is_admin')->default(false);
-            $table->bigInteger('quota')->default(0);
+            $table->bigInteger('quota')->default(1024*1024*10)->comment('每月限额,in Bytes');
             $table->unsignedBigInteger('download')->default(0);
             $table->unsignedBigInteger('upload')->default(0);
             $table->unsignedBigInteger('total_download')->default(0);

@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\NodeController;
 use App\Http\Controllers\Admin\UserController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,17 +15,23 @@ Route::get('/', function () {
 
 Route::get('/test', [TestController::class, 'index']);
 
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $nodes = DB::table('nodes')->paginate(3);
+    return view('dashboard', ['nodes' => $nodes]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/nodes/{node}/qrcode', [NodeController::class, 'showQRCode'])->name('node.qrcode');
 });
 
-Route::prefix('admin')->name('admin.')->middleware('isAdmin')->group(function () {
+
+Route::middleware('isAdmin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class)->except([
         'create', 'store', 'show'
     ]);
