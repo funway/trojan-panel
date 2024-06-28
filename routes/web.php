@@ -3,15 +3,14 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('test');
-});
+Route::get('/test', [TestController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
