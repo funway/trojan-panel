@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\NodeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\SubscriptionController;
 
 
 Route::get('/', function () {
@@ -21,6 +22,7 @@ Route::get('/dashboard', function () {
     return view('dashboard', ['nodes' => $nodes]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/sub/{uid}/{subscription_token}', [SubscriptionController::class, 'index'])->name('subscription');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

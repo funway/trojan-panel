@@ -6,29 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use chillerlan\QRCode\QRCode;
+use Carbon\Carbon;
+
+use App\Utils\Helper;
 
 class TestController extends Controller
 {
     public function index()
     {
         // return view('test');
-
-        $user = Auth::user();
-        $uri = '';
-        //display remaining traffic and expire date
-        $upload = round($user->upload / (1024*1024*1024), 2);
-        $download = round($user->download / (1024*1024*1024), 2);
-        // $uri .= "STATUS=🚀↑:{$upload}GB,↓:{$download}GB\r\n";
-        
-        $uri .= self::buildTrojan($user->password, '1号节点');
-        // $uri .= self::buildTrojan($user->password, 'node 2');
-        
-        info($uri);
-        // return base64_encode($uri);
-        $data = $uri;
-
-        // quick and simple:
-        echo '<img src="'.(new QRCode)->render($data).'" alt="QR Code" height="200" width="200"/>';
+        // echo(Carbon::now('UTC'));
+        // echo(Carbon::now()->addHours(3)->timezone('UTC'));
+        echo(Helper::generateRandomCode());
     }
 
     public static function buildTrojan($password, $server_name)

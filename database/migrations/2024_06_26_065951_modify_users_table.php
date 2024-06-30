@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('password', 56)->unique()->comment('这是 trojan 密码')->change();
 
-            $table->string('login_password')->comment('这是用户登录网站的密码');
+            $table->string('login_password')->nullable(false)->comment('这是用户登录网站的密码');
             $table->boolean('is_admin')->default(false);
-            $table->bigInteger('quota')->default(1024*1024*10)->comment('每月限额,in Bytes');
+            $table->bigInteger('quota')->default(1024*1024*1024*20)->comment('每月限额,in Bytes');
             $table->unsignedBigInteger('download')->default(0);
             $table->unsignedBigInteger('upload')->default(0);
             $table->unsignedBigInteger('total_download')->default(0);
@@ -31,13 +31,15 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $table->string('password')->change();
-        $table->dropColumn('login_password');
-        $table->dropColumn('is_admin');
-        $table->dropColumn('quota');
-        $table->dropColumn('download');
-        $table->dropColumn('upload');
-        $table->dropColumn('total_download');
-        $table->dropColumn('total_upload');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('password')->change();
+            $table->dropColumn('login_password');
+            $table->dropColumn('is_admin');
+            $table->dropColumn('quota');
+            $table->dropColumn('download');
+            $table->dropColumn('upload');
+            $table->dropColumn('total_download');
+            $table->dropColumn('total_upload');
+        });
     }
 };
