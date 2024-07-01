@@ -32,15 +32,12 @@ class SubscriptionController extends Controller
     public function reset($field)
     {
         $user = Auth::user();
-        // if ('addr' == $field) {
-        //     $user->subscription_token = User::generateSubscriptionToken();    
-        // }
-        // elseif ('trojan' == $filed) {
-        //     // code...
-        // }
         switch($field) {
             case 'addr':
+                // 重置订阅地址，则所有 token 要重置
                 $user->subscription_token = User::generateSubscriptionToken();
+                $user->trojan_token = User::generateTrojanToken();
+                $user->password = hash('sha224', $user->name.':'.$user->trojan_token);
                 break;
             case 'trojan':
                 $user->trojan_token = User::generateTrojanToken();
