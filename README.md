@@ -1,4 +1,4 @@
-# VPN-Panel
+# README.md
 
 An administration panel for trojan-gfw VPN.
 
@@ -17,14 +17,25 @@ An administration panel for trojan-gfw VPN.
 2. `npm install --production` 只安装生产环境要用的 JS 依赖库
 3. `npm run build` 生成实际使用的 CSS/JS 文件
 4. 将项目拷贝到服务器
+5. 修改 .env 文件, `APP_ENV=production`
+6. [Optional]
+`php artisan key:generate` 重新生成 APP_KEY
+`php artisan config:cache` 重新生成配置缓存
+`php artisan route:cache` 重新生成路由缓存
+`php artisan view:cache` 重新生成视图缓存
 
-## Dependences
+## Database
+
+需要自行给数据库添加两个定时任务
+
+1. 每月自动计算 total_download, total_upload 并将 download, upload 清零
+2. 每 N 分钟自动计算用户是否过期 (expire_at)，过期则将 quota 清零
+
+## Dependencies
 
 1. Laravel 11
 2. Tailwind CSS
+3. Flowbite
+4. flatpickr
 
 ## Todo
-
-1. 给用户模型增加 expire 属性
-2. 完善节点管理
-3. 修改 trojan 的密码，不使用 `user_name:user_passowrd` 形式。而是由服务器生成一个六位随机码 token, 然后使用 `user_name:token` 的形式。这样就可以在生成的 节点URL、节点二维码 中都明文写上这个 token 了，也就可以构造订阅链接了。
