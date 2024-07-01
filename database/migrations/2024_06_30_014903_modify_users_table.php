@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('name')->unique()->change();
 
-            $table->timestamp('expire_at', precision: 0)->comment('订阅过期时间');
+            $table->datetime('expire_at', precision: 0)->comment('订阅过期时间');
             
             $table->string('trojan_token', 6)->comment('trojan_password = SHA224(name:trojan_token)');
 

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use Carbon\Carbon;
+
 class UserController extends Controller
 {
     /**
@@ -65,7 +67,7 @@ class UserController extends Controller
             $user->quota = $request['quota'] < 0 ? -1 : $request['quota']*1048576;
         }
         if (!empty($request['expire_at'])) {
-            $user->expire_at = $request['expire_at'];
+            $user->expire_at = Carbon::parse($request['expire_at']);
         }
         
         if ($user->isDirty()) {

@@ -98,6 +98,7 @@
       flatpickr(expire_picker, {
           enableTime: true,
           time_24hr: true,
+          defaultDate: "{{ $user->expire_at }}",
       });
   });
 
