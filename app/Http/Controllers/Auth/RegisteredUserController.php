@@ -14,8 +14,6 @@ use Illuminate\View\View;
 
 use Carbon\Carbon;
 
-use App\Utils\Helper;
-
 class RegisteredUserController extends Controller
 {
     /**
@@ -39,7 +37,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $trojan_token = Helper::generateRandomCode();
+        $trojan_token = User::generateTrojanToken();
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -47,7 +45,7 @@ class RegisteredUserController extends Controller
             
             'expire_at' => Carbon::now('UTC')->addHours(3),            
             'trojan_token' => $trojan_token,
-            'subscription_token' => Helper::generateRandomCode(),
+            'subscription_token' => User::generateSubscriptionToken(),
             'password' => hash('sha224', $request->name . ':' . $trojan_token),
         ]);
 

@@ -56,13 +56,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if ($request['password'] != null) {
+        // info('用户提交数据', [$request]);
+
+        if (!empty($request['password'])) {
             $user->login_password = Hash::make($request['password']);
-            $user->password = hash('sha224', $user->name . ':' . $request['password']);
         }
-        $user->quota = $request['quota']<0 ? -1 : $request['quota']*1048576;
+        if (!empty($request['quota'])) {
+            $user->quota = $request['quota'] < 0 ? -1 : $request['quota']*1048576;
+        }
+        if (!empty($request['expire_at'])) {
+            $user->expire_at = $request['expire_at'];
+        }
         
-        $user->save();
+        if ($user->isDirty()) {
+            $user->save();
+        }
         return redirect()->route('admin.users.index');
     }
 

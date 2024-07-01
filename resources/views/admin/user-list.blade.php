@@ -25,37 +25,40 @@
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-3 py-3">
                                     #
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-3 py-3">
                                     Name
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-3 py-3">
                                     Email
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-3 py-3">
                                     Is Admin
                                 </th>
-                                <th scope="col" class="px-6 py-3" title="每月限额">
+                                <th scope="col" class="px-3 py-3" title="到期时间">
+                                    Expire
+                                </th>
+                                <th scope="col" class="px-3 py-3" title="每月限额">
                                     Quota
                                 </th>
-                                <th scope="col" class="px-6 py-3" title="当月剩余">
+                                <th scope="col" class="px-3 py-3" title="当月剩余">
                                     Remain
                                 </th>
-                                <th scope="col" class="px-6 py-3" title="当月下载">
+                                <th scope="col" class="px-3 py-3" title="当月下载">
                                     Download
                                 </th>
-                                <th scope="col" class="px-6 py-3" title="当月上传">
+                                <th scope="col" class="px-3 py-3" title="当月上传">
                                     Upload
                                 </th>
-                                <th scope="col" class="px-6 py-3" title="全部下载">
+                                <th scope="col" class="px-3 py-3" title="全部下载">
                                     Total Download
                                 </th>
-                                <th scope="col" class="px-6 py-3" title="全部上传">
+                                <th scope="col" class="px-3 py-3" title="全部上传">
                                     Total Upload
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-3 py-3">
                                     Action
                                 </th>
                             </tr>
@@ -66,37 +69,40 @@
                                     list($quota, $download, $upload, $remain) = human_string($user->quota, $user->download, $user->upload);
                                 @endphp
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-rose-100 dark:hover:bg-gray-600">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <th scope="row" class="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $user->id }}
                                 </th>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-3">
                                     {{ $user->name }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-3">
                                     {{ $user->email }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-3">
                                     {{ $user-> is_admin ? 'True' : 'False'}}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-3">
+                                    {{ $user->expire_at }}
+                                </td>
+                                <td class="px-3 py-3">
                                     {{ $quota }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-3">
                                     {{ $remain }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-3">
                                     {{ $download }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-3">
                                     {{ $upload }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-3">
                                     {{ human($user->total_download + $user->download) }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-3">
                                     {{ human($user->total_upload+ $user->upload) }}
                                 </td>
-                                <td class="flex items-center px-6 py-4">
+                                <td class="flex items-center px-3 py-3">
                                     <a href="{{ route('admin.users.edit', ['user'=>$user->id]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                     <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
                                 </td>

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Node extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'type',
+        'host',
+        'port',
+    ];
 }
