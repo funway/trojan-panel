@@ -15,9 +15,13 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = DB::table('users')->paginate(3);
+        $sortBy = $request->get('sort_by', 'id');
+        $sortDirection = $request->get('sort_direction', 'asc');
+
+        $users = DB::table('users')->orderBy($sortBy, $sortDirection)->paginate(3);
+        
         return view('admin.user-list', ['users' => $users]);
     }
 
