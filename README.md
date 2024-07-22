@@ -5,7 +5,7 @@ An administration panel for [Trojan](https://github.com/trojan-gfw/trojan) ‘VP
 ## Installation
 
 1. `composer install` to install PHP libraries → vendor/
-2. `npm install` to install JS libraries库 → node_modules/
+2. `npm install` to install JS libraries → node_modules/
 3. `npm run build` from the JS libraries, generate static files for production → public/build/
 
 or use `npm run dev` to run a Vite service to assist development. This Vite service will scan the front-end code in the project in real-time and automatically regenerate the CSS/JS files → public/build/
